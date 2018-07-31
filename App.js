@@ -51,7 +51,7 @@ export default class App extends Component {
      })`;
         const jsCode3 = `      
          googletag.cmd.push(function() {
-            var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/informatique/recherche/native-line', ['fluid'], "banner3");
+            var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/informatique/recherche/native-line', 'fluid', "banner3");
             adSlot1.addService(googletag.pubads());
            ${this.lapsList('native-line')}
             googletag.pubads().enableSingleRequest();
@@ -112,6 +112,6 @@ const styles = StyleSheet.create({
     },
     webView3: {
         backgroundColor: '#fff',
-        flex: 1,
+       flex: 1,
     }
 })
