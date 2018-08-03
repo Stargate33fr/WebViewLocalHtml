@@ -3781,7 +3781,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -3859,6 +3859,12 @@ react-devtools-core@3.0.0:
   dependencies:
     shell-quote "^1.6.1"
     ws "^2.0.3"
+
+"react-native-admob@git://github.com/cdiscount/react-native-admob#feature/resizeAdsByProps":
+  version "2.0.4-beta.3"
+  resolved "git://github.com/cdiscount/react-native-admob#03687b284b01a211e1fd71684bce7a867b520022"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-htmlview@^0.12.1:
   version "0.12.1"

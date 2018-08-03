@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "react-native run-android",
     "test": "jest",
     "devices": "adb devices",
     "tcp": "adb reverse tcp:8081 tcp:8081 & adb reverse tcp:8097 tcp:8097"
@@ -11,7 +11,8 @@
   "dependencies": {
     "react": "16.2.0",
     "react-native": "0.53.0",
-    "react-native-htmlview": "^0.12.1"
+    "react-native-htmlview": "^0.12.1",
+    "react-native-admob": "git://github.com/cdiscount/react-native-admob#feature/resizeAdsByProps"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",

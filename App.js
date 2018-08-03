@@ -2,20 +2,29 @@ import React, { Component } from 'react';
 import {
     WebView,
     View,
-    ScrollView,
     StyleSheet,
-    Platform, TouchableHighlight,Text
+    Platform,
+    Text,
+    Linking
 } from 'react-native';
 
 const isAndroid= Platform.OS==='android'
-var HTMLView = require('react-native-htmlview')
+
 export default class App extends Component {
     constructor(props) {
         super(props);
     }
 
+    _onNavigationStateChange(webViewState){
+        if (1==0){
+            let redirectCode = `window.location = '${LOGIN_URL}';`;
+        }
+
+        return false;
+    }
+
     lapsList(pos) {
-        const targeting =`pos:${pos}|requete:pneu|fullscreen:NON`;
+        const targeting =`pos:${pos}|requete:meuble TV|fullscreen:NON`;
         let target ='';
 
         targeting.split("|").forEach((data) => {
@@ -26,12 +35,11 @@ export default class App extends Component {
     }
 
     render() {
-
         var htmlContent = '<p><a href="http://jsdf.co">&hearts; nice job!</a></p>';
         // Cdiscount_App_Android
         const jsCode = `
         googletag.cmd.push(function() {
-          var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/informatique/recherche/pave-inpage', [300, 250] , "banner1");
+          var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/telephonie/recherche/pave-inpage', [300, 250] , "banner1");
           adSlot1.addService(googletag.pubads());
           ${this.lapsList('pave-inpage')}
           googletag.pubads().set('page_url', 'http://www.cdiscount.com/');
@@ -42,20 +50,30 @@ export default class App extends Component {
 
         const jsCode2 = `
       googletag.cmd.push(function() {
-         var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/informatique/recherche/banner-inpage',  [320, 50] , "banner2");
+         var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/telephonie/recherche/banner-inpage',  [320, 50] , "banner2");
          adSlot1.addService(googletag.pubads());
           ${this.lapsList('banner-inpage')}
          googletag.pubads().set('page_url', 'http://www.cdiscount.com/');
          googletag.enableServices();
          googletag.display('banner2'); 
      })`;
-        const jsCode3 = `      
-         googletag.cmd.push(function() {
-            var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/informatique/recherche/native-line', 'fluid', "banner3");
+
+       const jsCode3 = `
+        function ready() {
+            var iframe= window.frames["google_ads_iframe_7190/Cdiscount_App_Android/telephonie/recherche/native1_0"];
+            iframe.height="400px";
+            iframe.width="100%";
+        };
+        
+        googletag.cmd.push(function() {
+            var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/telephonie/recherche/native1', 'fluid', "banner3");
             adSlot1.addService(googletag.pubads());
-           ${this.lapsList('native-line')}
+           ${this.lapsList('native1')}
             googletag.pubads().enableSingleRequest();
             googletag.pubads().set('page_url', 'http://www.cdiscount.com/');
+            googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+               ready();
+            });
             googletag.enableServices();
             googletag.display('banner3'); 
         });`;
@@ -71,8 +89,12 @@ export default class App extends Component {
                     mixedContentMode="always"
                     injectedJavaScript={jsCode}
                     scrollEnabled={false}
-                    startInLoadingState={true}
-                />
+                    onNavigationStateChange={(event) => {
+                        if (event.url.startsWith("http://") || event.url.startsWith("https://")) {
+                            Linking.openURL(event.url);
+                        }
+                    }}
+                    />
                 <WebView
                     style={styles.webView2}
                     source={{uri:isAndroid?'file:///android_asset/widget/ad.html':'./widget/index.html', }}
@@ -81,7 +103,12 @@ export default class App extends Component {
                     injectedJavaScript={jsCode2}
                     scrollEnabled={false}
                     startInLoadingState={true}
-                />
+                    onNavigationStateChange={(event) => {
+                        if (event.url.startsWith("http://") || event.url.startsWith("https://")) {
+                            Linking.openURL(event.url);
+                        }
+                    }}
+                    />
                 <WebView
                     style={styles.webView3}
                     source= {{uri:isAndroid?'file:///android_asset/widget/ad.html':'./widget/index.html'}}
@@ -90,6 +117,11 @@ export default class App extends Component {
                     injectedJavaScript={jsCode3}
                     startInLoadingState={true}
                     scrollEnabled={false}
+                    onNavigationStateChange={(event) => {
+                        if (event.url.startsWith("http://") || event.url.startsWith("https://")) {
+                            Linking.openURL(event.url);
+                        }
+                    }}
                 />
             </View>
 
@@ -112,6 +144,14 @@ const styles = StyleSheet.create({
     },
     webView3: {
         backgroundColor: '#fff',
-       flex: 1,
-    }
+        width:300,
+        height:250,
+    },
+    banner_AD: {
+        alignSelf: 'center',
+        width: 320,
+        height: 50,
+        marginTop: 4,
+        marginBottom: 10,
+    },
 })
