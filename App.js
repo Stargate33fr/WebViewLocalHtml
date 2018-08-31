@@ -23,8 +23,15 @@ export default class App extends Component {
         return false;
     }
 
+    onPageLayout = (event) => {
+        const { width, height } = event.nativeEvent.layout;
+        console.warn("ON LAYOUT" + width.toString() + " " +height.toString());
+        this.setState({width, height})
+    };
+
+
     lapsList(pos) {
-        const targeting =`pos:${pos}|requete:meuble TV|fullscreen:NON`;
+        const targeting =`pos:${pos}|requete:avengers|fullscreen:NON`;
         let target ='';
 
         targeting.split("|").forEach((data) => {
@@ -60,27 +67,28 @@ export default class App extends Component {
 
        const jsCode3 = `
         function ready() {
-            var iframe= window.frames["google_ads_iframe_7190/Cdiscount_App_Android/telephonie/recherche/native1_0"];
-            iframe.height="400px";
+            var iframe= window.frames["google_ads_iframe_7190/Cdiscount_Smartphone/jeux-jouets/recherche/native-line_0"];
+            iframe.height="200px";
             iframe.width="100%";
         };
-        
+       
         googletag.cmd.push(function() {
-            var adSlot1 = googletag.defineSlot('7190/Cdiscount_App_Android/telephonie/recherche/native1', 'fluid', "banner3");
+            var adSlot1 = googletag.defineSlot('7190/Cdiscount_Smartphone/jeux-jouets/recherche/native-line', 'fluid', "banner3");
             adSlot1.addService(googletag.pubads());
-           ${this.lapsList('native1')}
+           ${this.lapsList('native-line')}
             googletag.pubads().enableSingleRequest();
             googletag.pubads().set('page_url', 'http://www.cdiscount.com/');
             googletag.pubads().addEventListener('slotRenderEnded', function(event) {
                ready();
             });
+            googletag.pubads().set('page_url', 'http://www.cdiscount.com/');
             googletag.enableServices();
             googletag.display('banner3'); 
         });`;
 
         return (
 
-            <View style={styles.container}>
+            <View style={styles.container} onLayout={this.onPageLayout}>
                 <Text>Publicité</Text>
                 <WebView
                     style={styles.webView}
@@ -144,8 +152,7 @@ const styles = StyleSheet.create({
     },
     webView3: {
         backgroundColor: '#fff',
-        width:300,
-        height:250,
+        flex: 1,
     },
     banner_AD: {
         alignSelf: 'center',
